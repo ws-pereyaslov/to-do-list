@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import './App.css';
 
+var API = 'http://localhost:3000/'
 class App extends Component {
 
 	constructor(props) {
@@ -16,7 +17,7 @@ class App extends Component {
 	}
 
 	componentDidMount () {
-		axios.get('http://localhost:8080/task')
+		axios.get(API + 'task')
 			.then((res) => {
 				this.setState({
 					tasks : res.data,
@@ -33,7 +34,7 @@ class App extends Component {
 			title       : this.state.title,
 			description : this.state.description
 		};
-		axios.post('http://localhost:8080/task', task)
+		axios.post(API + 'task', task)
 			.then((res) => {
 				let tasksClone = this.state.tasks.slice(0);;
 				tasksClone.unshift(task);
