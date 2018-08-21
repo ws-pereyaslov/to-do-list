@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import './App.css';
 
-var API = 'http://localhost:3000/'
+var API = 'http://localhost:8080/'
 class App extends Component {
 
 	constructor(props) {
