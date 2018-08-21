@@ -26,11 +26,10 @@
 				res.status(400).send(err);
 			})
 		}
-		
+
 		function get (req, res) {
 			taskService.get()
 			.then(data => {
-				// console.log('data', data);
 				let resData = [];
 				for (let key in data) {
 					resData.push(data[key])
