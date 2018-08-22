@@ -9,6 +9,7 @@
 # production
 /build
 /n
+/.firebase
 
 # misc
 .firebaserc

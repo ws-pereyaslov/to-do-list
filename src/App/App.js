@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
+import Loader from 'react-loader';
+import firebase from 'firebase';
 import './App.css';
 
-var API = 'http://localhost:8080/'
+const config = {
+	apiKey            : "AIzaSyDRfb8ofRyOmGsByORR88Q3aMJshySehO4",
+	authDomain        : "todolist-1b2d0.firebaseapp.com",
+	databaseURL       : "https://todolist-1b2d0.firebaseio.com",
+	projectId         : "todolist-1b2d0",
+	storageBucket     : "todolist-1b2d0.appspot.com",
+	messagingSenderId : "538607631494"
+};
+firebase.initializeApp(config);
+const service = firebase.functions();
 class App extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
+			loaded      : false,
 			title       : '',
 			description : '',
 			tasks       : [],
@@ -17,14 +27,13 @@ class App extends Component {
 	}
 
 	componentDidMount () {
-		axios.get(API + 'task')
+		let getTasks = service.httpsCallable('getTasks');
+		getTasks()
 			.then((res) => {
 				this.setState({
-					tasks : res.data,
+					tasks  : res.data,
+					loaded : true
 				})
-			})
-			.catch((error) => {
-				console.log(error);
 			})
 	}
 
@@ -34,7 +43,8 @@ class App extends Component {
 			title       : this.state.title,
 			description : this.state.description
 		};
-		axios.post(API + 'task', task)
+		let createTask = service.httpsCallable('createTask');
+		createTask(task)
 			.then((res) => {
 				let tasksClone = this.state.tasks.slice(0);;
 				tasksClone.unshift(task);
@@ -44,9 +54,6 @@ class App extends Component {
 					title       : '',
 					description : '',
 				})
-			})
-			.catch((error) => {
-				console.log(error);
 			})
 	}
 
@@ -91,7 +98,10 @@ class App extends Component {
 									)
 								})
 								:
-								<span>List is empty</span>
+								<div>
+									{this.state.loaded && <span className="empty">List is empty</span>}
+									<Loader className="my-spinner" loaded={this.state.loaded} />
+								</div>
 						}
 					</section>
 					:

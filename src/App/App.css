@@ -27,6 +27,9 @@
     display: flex;
     flex-direction: column;
     align-items: center; }
+    .to-do .to-do-content .empty {
+      font-size: 24px;
+      padding-top: 30px; }
     .to-do .to-do-content .list-item {
       width: 300px;
       margin-top: 15px;
