@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader';
 import firebase from 'firebase';
+import config from './config-firebase';
 import './App.css';
 
-const config = {
-	apiKey            : "AIzaSyDRfb8ofRyOmGsByORR88Q3aMJshySehO4",
-	authDomain        : "todolist-1b2d0.firebaseapp.com",
-	databaseURL       : "https://todolist-1b2d0.firebaseio.com",
-	projectId         : "todolist-1b2d0",
-	storageBucket     : "todolist-1b2d0.appspot.com",
-	messagingSenderId : "538607631494"
-};
 firebase.initializeApp(config);
 const service = firebase.functions();
 class App extends Component {
@@ -18,10 +11,10 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loaded      : false,
+			tasks       : [],
 			title       : '',
 			description : '',
-			tasks       : [],
+			loaded      : false,
 			switch      : false
 		};
 	}
@@ -65,7 +58,6 @@ class App extends Component {
 		this.setState({ description : event.target.value });
 	}
 
-
 	switchForm = () => {
 		this.setState({
 			switch : !this.state.switch,
@@ -80,9 +72,9 @@ class App extends Component {
 				</header>
 				<button className="create-button" onClick={this.switchForm}>
 				{!this.state.switch ?
-					<span>Create task </span>	
+					<span>Create task </span>
 					:
-					<span>Back</span>	
+					<span>Back</span>
 				}
 				</button>
 				{!this.state.switch ?
